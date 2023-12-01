@@ -16,8 +16,8 @@ class GradientPatchModelAddDownscale:
     CATEGORY = "_for_testing"
 
     def patch(self, model, block_number, downscale_factor, start_percent, end_percent, downscale_after_skip):
-        sigma_start = model.model.model_sampling.percent_to_sigma(start_percent).item()
-        sigma_end = model.model.model_sampling.percent_to_sigma(end_percent).item()
+        sigma_start = model.model.model_sampling.percent_to_sigma(start_percent)
+        sigma_end = model.model.model_sampling.percent_to_sigma(end_percent)
 
         # Linear scale factor between start_percent and end_percent, so 1/downscale_factor at start_percent and 1 at end_percent
         def calc_scale_factor(percent):
@@ -33,7 +33,7 @@ class GradientPatchModelAddDownscale:
             scale_factor = 1.0
             for i in range(0, 100):
                 percent = i / 100.0
-                s = model.model.model_sampling.percent_to_sigma(percent).item()
+                s = model.model.model_sampling.percent_to_sigma(percent)
                 if s > sigma:
                     scale_factor = calc_scale_factor(percent)
             return scale_factor
